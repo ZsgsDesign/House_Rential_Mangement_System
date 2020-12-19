@@ -22,7 +22,7 @@ class CreateAdminTables extends Migration
     public function up()
     {
         Schema::create(config('admin.database.users_table'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('username', 190)->unique();
             $table->string('password', 60);
             $table->string('name');
@@ -32,14 +32,14 @@ class CreateAdminTables extends Migration
         });
 
         Schema::create(config('admin.database.roles_table'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 50)->unique();
             $table->string('slug', 50)->unique();
             $table->timestamps();
         });
 
         Schema::create(config('admin.database.permissions_table'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 50)->unique();
             $table->string('slug', 50)->unique();
             $table->string('http_method')->nullable();
@@ -48,7 +48,7 @@ class CreateAdminTables extends Migration
         });
 
         Schema::create(config('admin.database.menu_table'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('parent_id')->default(0);
             $table->integer('order')->default(0);
             $table->string('title', 50);
@@ -60,36 +60,36 @@ class CreateAdminTables extends Migration
         });
 
         Schema::create(config('admin.database.role_users_table'), function (Blueprint $table) {
-            $table->integer('role_id');
-            $table->integer('user_id');
+            $table->foreignId('role_id')->constrained('admin_roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('admin_users')->onDelete('cascade')->onUpdate('cascade');
             $table->index(['role_id', 'user_id']);
             $table->timestamps();
         });
 
         Schema::create(config('admin.database.role_permissions_table'), function (Blueprint $table) {
-            $table->integer('role_id');
-            $table->integer('permission_id');
+            $table->foreignId('role_id')->constrained('admin_roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('permission_id')->constrained('admin_permissions')->onDelete('cascade')->onUpdate('cascade');
             $table->index(['role_id', 'permission_id']);
             $table->timestamps();
         });
 
         Schema::create(config('admin.database.user_permissions_table'), function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('permission_id');
+            $table->foreignId('user_id')->constrained('admin_users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('permission_id')->constrained('admin_permissions')->onDelete('cascade')->onUpdate('cascade');
             $table->index(['user_id', 'permission_id']);
             $table->timestamps();
         });
 
         Schema::create(config('admin.database.role_menu_table'), function (Blueprint $table) {
-            $table->integer('role_id');
-            $table->integer('menu_id');
+            $table->foreignId('role_id')->constrained('admin_roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('menu_id')->constrained('admin_menus')->onDelete('cascade')->onUpdate('cascade');
             $table->index(['role_id', 'menu_id']);
             $table->timestamps();
         });
 
         Schema::create(config('admin.database.operation_log_table'), function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
+            $table->id();
+            $table->foreignId('user_id')->constrained('admin_users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('path');
             $table->string('method', 10);
             $table->string('ip');
