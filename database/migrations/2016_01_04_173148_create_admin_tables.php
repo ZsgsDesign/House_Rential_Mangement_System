@@ -58,45 +58,6 @@ class CreateAdminTables extends Migration
 
             $table->timestamps();
         });
-
-        Schema::create(config('admin.database.role_users_table'), function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained('admin_roles')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('user_id')->constrained('admin_users')->onDelete('cascade')->onUpdate('cascade');
-            $table->index(['role_id', 'user_id']);
-            $table->timestamps();
-        });
-
-        Schema::create(config('admin.database.role_permissions_table'), function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained('admin_roles')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('permission_id')->constrained('admin_permissions')->onDelete('cascade')->onUpdate('cascade');
-            $table->index(['role_id', 'permission_id']);
-            $table->timestamps();
-        });
-
-        Schema::create(config('admin.database.user_permissions_table'), function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('admin_users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('permission_id')->constrained('admin_permissions')->onDelete('cascade')->onUpdate('cascade');
-            $table->index(['user_id', 'permission_id']);
-            $table->timestamps();
-        });
-
-        Schema::create(config('admin.database.role_menu_table'), function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained('admin_roles')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('menu_id')->constrained('admin_menus')->onDelete('cascade')->onUpdate('cascade');
-            $table->index(['role_id', 'menu_id']);
-            $table->timestamps();
-        });
-
-        Schema::create(config('admin.database.operation_log_table'), function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('admin_users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('path');
-            $table->string('method', 10);
-            $table->string('ip');
-            $table->text('input');
-            $table->index('user_id');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -110,10 +71,5 @@ class CreateAdminTables extends Migration
         Schema::dropIfExists(config('admin.database.roles_table'));
         Schema::dropIfExists(config('admin.database.permissions_table'));
         Schema::dropIfExists(config('admin.database.menu_table'));
-        Schema::dropIfExists(config('admin.database.user_permissions_table'));
-        Schema::dropIfExists(config('admin.database.role_users_table'));
-        Schema::dropIfExists(config('admin.database.role_permissions_table'));
-        Schema::dropIfExists(config('admin.database.role_menu_table'));
-        Schema::dropIfExists(config('admin.database.operation_log_table'));
     }
 }

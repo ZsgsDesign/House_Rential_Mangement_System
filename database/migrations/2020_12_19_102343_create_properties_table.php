@@ -16,8 +16,8 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('area_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->text('address')->comment('物业地址');
-            $table->text('name')->comment('物业名称');
+            $table->string('address', 255)->comment('物业地址');
+            $table->string('name', 100)->comment('物业名称');
             $table->timestamps();
         });
     }
