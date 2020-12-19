@@ -18,6 +18,8 @@ class CreatePropertiesTable extends Migration
             $table->foreignId('area_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('address', 255)->comment('物业地址');
             $table->string('name', 100)->comment('物业名称');
+            $table->decimal('lat', 10, 6)->comment('纬度');
+            $table->decimal('lng', 10, 6)->comment('经度');
             $table->timestamps();
         });
     }

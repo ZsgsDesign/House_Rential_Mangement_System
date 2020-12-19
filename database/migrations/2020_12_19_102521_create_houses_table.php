@@ -18,8 +18,6 @@ class CreateHousesTable extends Migration
             $table->boolean('method')->comment('0 租借 1 出售')->default(0);
             $table->string('building',50)->comment('幢/座');
             $table->foreignId('property_id')->constrained('properties')->onDelete('cascade')->onUpdate('cascade');
-            $table->decimal('lat', 10, 6)->comment('纬度');
-            $table->decimal('lng', 10, 6)->comment('经度');
             $table->string('floor',50)->comment('楼层');
             $table->decimal('square_meter',10,4)->comment('面积（平方米）');
             $table->integer('bedrooms')->comment('几室');
