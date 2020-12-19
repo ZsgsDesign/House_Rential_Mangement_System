@@ -14,9 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int        $livingrooms
  * @property boolean    $method
  * @property string     $note
- * @property string     $rent_price
- * @property string     $sell_price
- * @property string     $square_meter
  * @property boolean    $status
  * @property int        $updated_at
  */
@@ -42,7 +39,7 @@ class House extends Model
      * @var array
      */
     protected $fillable = [
-        'balconines', 'bathrooms', 'bedrooms', 'building', 'created_at', 'floor', 'lat', 'livingrooms', 'lng', 'method', 'note', 'property_id', 'rent_price', 'sell_price', 'square_meter', 'status', 'updated_at'
+        'balconines', 'bathrooms', 'bedrooms', 'building', 'created_at', 'floor', 'livingrooms', 'method', 'note', 'property_id', 'rent_price', 'sell_price', 'square_meter', 'status', 'updated_at'
     ];
 
     /**
@@ -60,7 +57,7 @@ class House extends Model
      * @var array
      */
     protected $casts = [
-        'balconines' => 'int', 'bathrooms' => 'int', 'bedrooms' => 'int', 'building' => 'string', 'created_at' => 'timestamp', 'floor' => 'string', 'livingrooms' => 'int', 'method' => 'boolean', 'note' => 'string', 'rent_price' => 'string', 'sell_price' => 'string', 'square_meter' => 'string', 'status' => 'boolean', 'updated_at' => 'timestamp'
+        'balconines' => 'int', 'bathrooms' => 'int', 'bedrooms' => 'int', 'building' => 'string', 'created_at' => 'timestamp', 'floor' => 'string', 'livingrooms' => 'int', 'method' => 'boolean', 'note' => 'string', 'status' => 'boolean', 'updated_at' => 'timestamp'
     ];
 
     /**

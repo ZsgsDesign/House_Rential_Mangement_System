@@ -32,7 +32,7 @@ class Property extends Model
      * @var array
      */
     protected $fillable = [
-        'address', 'area_id', 'created_at', 'name', 'updated_at'
+        'address', 'area_id', 'created_at', 'lat', 'lng', 'name', 'updated_at'
     ];
 
     /**
