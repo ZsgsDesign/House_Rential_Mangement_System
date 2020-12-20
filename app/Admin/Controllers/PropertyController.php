@@ -30,6 +30,8 @@ class PropertyController extends AdminController
         $grid->column('area_id', __('Area id'));
         $grid->column('address', __('Address'));
         $grid->column('name', __('Name'));
+        $grid->column('lat', __('Lat'));
+        $grid->column('lng', __('Lng'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -50,6 +52,8 @@ class PropertyController extends AdminController
         $show->field('area_id', __('Area id'));
         $show->field('address', __('Address'));
         $show->field('name', __('Name'));
+        $show->field('lat', __('Lat'));
+        $show->field('lng', __('Lng'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -66,8 +70,10 @@ class PropertyController extends AdminController
         $form = new Form(new Property());
 
         $form->number('area_id', __('Area id'));
-        $form->textarea('address', __('Address'));
-        $form->textarea('name', __('Name'));
+        $form->text('address', __('Address'));
+        $form->text('name', __('Name'));
+        $form->decimal('lat', __('Lat'));
+        $form->decimal('lng', __('Lng'));
 
         return $form;
     }

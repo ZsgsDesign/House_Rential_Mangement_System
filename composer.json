@@ -15,7 +15,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel-lang/lang": "~7.0",
         "laravel/framework": "^8.12",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "zhusaidong/laravel-admin-grid-exporter": "^0.1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

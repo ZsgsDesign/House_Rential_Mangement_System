@@ -30,8 +30,6 @@ class HouseController extends AdminController
         $grid->column('method', __('Method'));
         $grid->column('building', __('Building'));
         $grid->column('property_id', __('Property id'));
-        $grid->column('lat', __('Lat'));
-        $grid->column('lng', __('Lng'));
         $grid->column('floor', __('Floor'));
         $grid->column('square_meter', __('Square meter'));
         $grid->column('bedrooms', __('Bedrooms'));
@@ -62,8 +60,6 @@ class HouseController extends AdminController
         $show->field('method', __('Method'));
         $show->field('building', __('Building'));
         $show->field('property_id', __('Property id'));
-        $show->field('lat', __('Lat'));
-        $show->field('lng', __('Lng'));
         $show->field('floor', __('Floor'));
         $show->field('square_meter', __('Square meter'));
         $show->field('bedrooms', __('Bedrooms'));
@@ -90,18 +86,16 @@ class HouseController extends AdminController
         $form = new Form(new House());
 
         $form->switch('method', __('Method'));
-        $form->textarea('building', __('Building'));
+        $form->text('building', __('Building'));
         $form->number('property_id', __('Property id'));
-        $form->decimal('lat', __('Lat'));
-        $form->decimal('lng', __('Lng'));
-        $form->textarea('floor', __('Floor'));
-        $form->textarea('square_meter', __('Square meter'));
+        $form->text('floor', __('Floor'));
+        $form->decimal('square_meter', __('Square meter'));
         $form->number('bedrooms', __('Bedrooms'));
         $form->number('livingrooms', __('Livingrooms'));
         $form->number('bathrooms', __('Bathrooms'));
         $form->number('balconines', __('Balconines'));
-        $form->textarea('sell_price', __('Sell price'));
-        $form->textarea('rent_price', __('Rent price'));
+        $form->number('sell_price', __('Sell price'));
+        $form->number('rent_price', __('Rent price'));
         $form->switch('status', __('Status'));
         $form->textarea('note', __('Note'));
 

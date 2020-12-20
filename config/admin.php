@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Laravel-admin',
+    'name' => '房产中介管理系统',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<b>房产中介</b> 管理系统',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<b>房</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Admin',
+    'title' => '房产中介管理系统',
 
     /*
     |--------------------------------------------------------------------------
@@ -249,7 +249,7 @@ return [
     | Set a default avatar for newly created users.
     |
     */
-    'default_avatar' => '/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg',
+    'default_avatar' => '/static/img/avatar/default.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -395,6 +395,9 @@ return [
     |
     */
     'extensions' => [
-
+        'gridexporter' => [
+            // Set this to false if you want to disable this extension
+            'enable' => true,
+        ]
     ],
 ];
