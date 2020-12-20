@@ -1,8 +1,9 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 
 /**
  * @property int        $created_at
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Area extends Model
 {
+    use DefaultDatetimeFormat;
     /**
      * The database table used by the model.
      *
@@ -31,7 +33,7 @@ class Area extends Model
      * @var array
      */
     protected $fillable = [
-        'created_at', 'name', 'updated_at'
+        'name'
     ];
 
     /**
@@ -49,16 +51,7 @@ class Area extends Model
      * @var array
      */
     protected $casts = [
-        'created_at' => 'timestamp', 'name' => 'string', 'updated_at' => 'timestamp'
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at', 'updated_at'
+        'name' => 'string',
     ];
 
     /**
@@ -66,7 +59,7 @@ class Area extends Model
      *
      * @var boolean
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     // Scopes...
 

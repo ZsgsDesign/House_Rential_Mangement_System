@@ -1,8 +1,9 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 
 /**
  * @property int        $balconines
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class House extends Model
 {
+    use DefaultDatetimeFormat;
     /**
      * The database table used by the model.
      *
@@ -39,7 +41,7 @@ class House extends Model
      * @var array
      */
     protected $fillable = [
-        'balconines', 'bathrooms', 'bedrooms', 'building', 'created_at', 'floor', 'livingrooms', 'method', 'note', 'property_id', 'rent_price', 'sell_price', 'square_meter', 'status', 'updated_at'
+        'balconines', 'bathrooms', 'bedrooms', 'building', 'floor', 'livingrooms', 'method', 'note', 'property_id', 'rent_price', 'sell_price', 'square_meter', 'status'
     ];
 
     /**
@@ -57,16 +59,7 @@ class House extends Model
      * @var array
      */
     protected $casts = [
-        'balconines' => 'int', 'bathrooms' => 'int', 'bedrooms' => 'int', 'building' => 'string', 'created_at' => 'timestamp', 'floor' => 'string', 'livingrooms' => 'int', 'method' => 'boolean', 'note' => 'string', 'status' => 'boolean', 'updated_at' => 'timestamp'
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at', 'updated_at'
+        'balconines' => 'int', 'bathrooms' => 'int', 'bedrooms' => 'int', 'building' => 'string', 'floor' => 'string', 'livingrooms' => 'int', 'method' => 'boolean', 'note' => 'string', 'status' => 'boolean'
     ];
 
     /**
@@ -74,7 +67,7 @@ class House extends Model
      *
      * @var boolean
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     // Scopes...
 

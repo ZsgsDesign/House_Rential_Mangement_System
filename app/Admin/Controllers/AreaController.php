@@ -27,9 +27,15 @@ class AreaController extends AdminController
         $grid = new Grid(new Area());
 
         $grid->column('id', "编号");
-        $grid->column('name', "名称");
+        $grid->column('name', "名称")->editable();
         $grid->column('created_at', "创建日期");
         $grid->column('updated_at', "更新日期");
+
+        $grid->filter(function($filter){
+            $filter->disableIdFilter();
+            $filter->like('name', '名称');
+        });
+        $grid->expandFilter();
 
         return $grid;
     }
@@ -61,7 +67,7 @@ class AreaController extends AdminController
     {
         $form = new Form(new Area());
 
-        $form->text('name', "名称");
+        $form->text('name', "名称")->icon('fa-location-arrow');
 
         return $form;
     }
