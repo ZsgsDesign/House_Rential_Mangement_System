@@ -67,7 +67,7 @@ class AreaController extends AdminController
     {
         $form = new Form(new Area());
 
-        $form->text('name', "名称")->icon('fa-location-arrow');
+        $form->text('name', "名称")->icon('fa-map')->required();
 
         return $form;
     }

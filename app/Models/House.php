@@ -73,6 +73,18 @@ class House extends Model
 
     // Functions ...
 
+    public static $status = ["正常","已成交","异常"];
+    public static $method = ["租售","出售","租售/出售"];
+
+    public function getPropertyLatAttribute()
+    {
+        return $this->property->lat;
+    }
+    public function getPropertyLngAttribute()
+    {
+        return $this->property->lng;
+    }
+
     // Relations ...
 
     public function property()

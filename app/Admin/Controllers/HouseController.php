@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\House;
+use App\Models\Property;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -15,7 +16,7 @@ class HouseController extends AdminController
      *
      * @var string
      */
-    protected $title = 'House';
+    protected $title = '房源';
 
     /**
      * Make a grid builder.
@@ -26,22 +27,35 @@ class HouseController extends AdminController
     {
         $grid = new Grid(new House());
 
-        $grid->column('id', __('Id'));
-        $grid->column('method', __('Method'));
-        $grid->column('building', __('Building'));
-        $grid->column('property_id', __('Property id'));
-        $grid->column('floor', __('Floor'));
-        $grid->column('square_meter', __('Square meter'));
-        $grid->column('bedrooms', __('Bedrooms'));
-        $grid->column('livingrooms', __('Livingrooms'));
-        $grid->column('bathrooms', __('Bathrooms'));
-        $grid->column('balconines', __('Balconines'));
-        $grid->column('sell_price', __('Sell price'));
-        $grid->column('rent_price', __('Rent price'));
-        $grid->column('status', __('Status'));
-        $grid->column('note', __('Note'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', "编号");
+        $grid->column('method', "出售方式")->display(function ($method) {
+            return House::$method[$method];
+        });
+        $grid->column('area_name', "所属地区")->display(function () {
+            return Property::find($this->property_id)->area->name;
+        });
+        $grid->column('property.address', "物业地址");
+        $grid->column('property.name', "物业名称");
+        $grid->column('building', "幢/座")->editable();
+        $grid->column('floor', "楼层与房间")->editable();
+        $grid->column('square_meter', "面积")->display(function ($square_meter) {
+            return "{$square_meter}㎡";
+        });
+        $grid->column('type', '房型')->display(function () {
+            return "{$this->bedrooms}室{$this->livingrooms}厅{$this->bathrooms}卫{$this->balconines}阳台";
+        });
+        $grid->column('sell_price', "售价")->display(function ($price) {
+            return "￥$price";
+        });
+        $grid->column('rent_price', "租金/月")->display(function ($price) {
+            return "￥$price";
+        });
+        $grid->column('status', "当前状态")->display(function ($status) {
+            return House::$status[$status];
+        });
+        $grid->column('note', "备注")->editable('textarea');
+        $grid->column('created_at', "创建日期");
+        $grid->column('updated_at', "更新日期");
 
         return $grid;
     }
@@ -56,22 +70,36 @@ class HouseController extends AdminController
     {
         $show = new Show(House::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('method', __('Method'));
-        $show->field('building', __('Building'));
-        $show->field('property_id', __('Property id'));
-        $show->field('floor', __('Floor'));
-        $show->field('square_meter', __('Square meter'));
-        $show->field('bedrooms', __('Bedrooms'));
-        $show->field('livingrooms', __('Livingrooms'));
-        $show->field('bathrooms', __('Bathrooms'));
-        $show->field('balconines', __('Balconines'));
-        $show->field('sell_price', __('Sell price'));
-        $show->field('rent_price', __('Rent price'));
-        $show->field('status', __('Status'));
-        $show->field('note', __('Note'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('id', "编号");
+        $show->field('method', "出售方式")->as(function ($method) {
+            return House::$method[$method];
+        });
+        $show->field('area_name', "所属地区")->as(function () {
+            return Property::find($this->property_id)->area->name;
+        });
+        $show->field('property.address', "物业地址");
+        $show->field('property.name', "物业名称");
+        $show->field('地理位置')->latlong('property_lat', 'property_lng', $height = 400, $zoom = 16);
+        $show->field('building', "幢/座");
+        $show->field('floor', "楼层与房间");
+        $show->field('square_meter', "面积")->as(function ($square_meter) {
+            return "{$square_meter}㎡";
+        });
+        $show->field('type', '房型')->as(function () {
+            return "{$this->bedrooms}室{$this->livingrooms}厅{$this->bathrooms}卫{$this->balconines}阳台";
+        });
+        $show->field('sell_price', "售价")->as(function ($price) {
+            return "￥$price";
+        });
+        $show->field('rent_price', "租金/月")->as(function ($price) {
+            return "￥$price";
+        });
+        $show->field('status', "当前状态")->as(function ($status) {
+            return House::$status[$status];
+        });
+        $show->field('note', "备注");
+        $show->field('created_at', "创建日期");
+        $show->field('updated_at', "更新日期");
 
         return $show;
     }
@@ -85,19 +113,21 @@ class HouseController extends AdminController
     {
         $form = new Form(new House());
 
-        $form->switch('method', __('Method'));
-        $form->text('building', __('Building'));
-        $form->number('property_id', __('Property id'));
-        $form->text('floor', __('Floor'));
-        $form->decimal('square_meter', __('Square meter'));
-        $form->number('bedrooms', __('Bedrooms'));
-        $form->number('livingrooms', __('Livingrooms'));
-        $form->number('bathrooms', __('Bathrooms'));
-        $form->number('balconines', __('Balconines'));
-        $form->number('sell_price', __('Sell price'));
-        $form->number('rent_price', __('Rent price'));
-        $form->switch('status', __('Status'));
-        $form->textarea('note', __('Note'));
+            $form->select('method', "出售方式")->options(House::$method)->required();
+            $form->select('property_id', "所属物业")->options(Property::all()->pluck('name', 'id'))->required();
+            $form->text('building', "幢/座")->icon('fa-building')->required();
+            $form->text('floor', "楼层与房间")->icon('fa-home')->required();
+            $form->decimal('square_meter', "面积")->icon('fa-superscript')->required();
+
+            $form->number('bedrooms', "室")->required();
+            $form->number('livingrooms', "厅")->required();
+            $form->number('bathrooms', "卫")->required();
+            $form->number('balconines', "阳台")->required();
+
+            $form->currency('sell_price', "售价")->required();
+            $form->currency('rent_price', "租金/月")->required();
+            $form->select('status', "当前状态")->options(House::$status)->required();
+            $form->textarea('note', "备注")->required();
 
         return $form;
     }

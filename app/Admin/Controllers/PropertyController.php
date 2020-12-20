@@ -16,7 +16,7 @@ class PropertyController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Property';
+    protected $title = '物业';
 
     /**
      * Make a grid builder.
@@ -29,10 +29,8 @@ class PropertyController extends AdminController
 
         $grid->column('id', "编号");
         $grid->column('area.name', "所属地区");
-        $grid->column('address', "物业地址");
-        $grid->column('name', "物业名称");
-        // $grid->column('lat', "纬度");
-        // $grid->column('lng', "经度");
+        $grid->column('address', "物业地址")->editable();
+        $grid->column('name', "物业名称")->editable();
         $grid->column('created_at', "创建日期");
         $grid->column('updated_at', "更新日期");
 
@@ -60,8 +58,7 @@ class PropertyController extends AdminController
         $show->field('area.name', "所属地区");
         $show->field('address', "物业地址");
         $show->field('name', "物业名称");
-        $show->field('lat', "纬度");
-        $show->field('lng', "经度");
+        $show->field('地理位置')->latlong('lat', 'lng', $height = 400, $zoom = 16);
         $show->field('created_at', "创建日期");
         $show->field('updated_at', "更新日期");
 
@@ -77,11 +74,10 @@ class PropertyController extends AdminController
     {
         $form = new Form(new Property());
 
-        $form->select('area_id', "所在地区")->options(Area::all()->pluck('name', 'id'));
-        $form->text('address', "物业地址");
-        $form->text('name', "物业名称");
-        $form->decimal('lat', "纬度");
-        $form->decimal('lng', "经度");
+        $form->select('area_id', "所在地区")->options(Area::all()->pluck('name', 'id'))->required();
+        $form->text('address', "物业地址")->icon('fa-road')->required();
+        $form->text('name', "物业名称")->icon('fa-institution')->required();
+        $form->latlong('lat', 'lng', '地理位置')->required();
 
         return $form;
     }
