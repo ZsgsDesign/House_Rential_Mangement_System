@@ -50,8 +50,8 @@ class HouseController extends AdminController
         $grid->column('rent_price', "租金/月")->display(function ($price) {
             return "￥$price";
         });
-        $grid->column('status', "当前状态")->display(function ($status) {
-            return House::$status[$status];
+        $grid->column('parsed_status', "当前状态")->display(function () {
+            return $this->parsed_status;
         });
         $grid->column('note', "备注")->editable('textarea');
         $grid->column('created_at', "创建日期");
@@ -94,8 +94,8 @@ class HouseController extends AdminController
         $show->field('rent_price', "租金/月")->as(function ($price) {
             return "￥$price";
         });
-        $show->field('status', "当前状态")->as(function ($status) {
-            return House::$status[$status];
+        $show->field('parsed_status', "当前状态")->as(function () {
+            return $this->parsed_status;
         });
         $show->field('note', "备注");
         $show->field('created_at', "创建日期");
@@ -124,9 +124,8 @@ class HouseController extends AdminController
             $form->number('bathrooms', "卫")->required();
             $form->number('balconines', "阳台")->required();
 
-            $form->currency('sell_price', "售价")->required();
-            $form->currency('rent_price', "租金/月")->required();
-            $form->select('status', "当前状态")->options(House::$status)->required();
+            $form->currency('sell_price', "售价")->symbol('￥')->required();
+            $form->currency('rent_price', "租金/月")->symbol('￥')->required();
             $form->textarea('note', "备注")->required();
 
         return $form;

@@ -14,17 +14,17 @@ class HomeController extends Controller
     {
         return $content
             ->title('仪表盘')
-            ->description('这里是管理系统的工作区')
-            ->row(Dashboard::title())
+            ->description('这里是管理系统的系统运行状态区')
+            // ->row(Dashboard::title())
             ->row(function (Row $row) {
 
-                $row->column(4, function (Column $column) {
+                $row->column(8, function (Column $column) {
                     $column->append(Dashboard::environment());
                 });
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
+                // $row->column(4, function (Column $column) {
+                //     $column->append(Dashboard::extensions());
+                // });
 
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::dependencies());

@@ -15,4 +15,6 @@ Route::group([
     $router->resource('areas', AreaController::class);
     $router->resource('houses', HouseController::class);
     $router->resource('properties', PropertyController::class);
+    $router->resource('purchases', PurchaseController::class);
+    $router->resource('consumers', ConsumerController::class);
 });

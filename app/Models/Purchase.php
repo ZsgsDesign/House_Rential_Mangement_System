@@ -6,20 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
 
 /**
- * @property string     $address
  * @property int        $created_at
- * @property string     $name
+ * @property int        $ended_at
+ * @property boolean    $sell_type
+ * @property int        $started_at
  * @property int        $updated_at
  */
-class Property extends Model
+class Purchase extends Model
 {
     use DefaultDatetimeFormat;
+
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'properties';
+    protected $table = 'purchases';
 
     /**
      * The primary key for the model.
@@ -34,7 +36,7 @@ class Property extends Model
      * @var array
      */
     protected $fillable = [
-        'address', 'area_id', 'lat', 'lng', 'name'
+        'consumer_id', 'ended_at', 'house_id', 'price', 'sell_type', 'started_at'
     ];
 
     /**
@@ -52,7 +54,7 @@ class Property extends Model
      * @var array
      */
     protected $casts = [
-        'address' => 'string', 'name' => 'string'
+         'sell_type' => 'boolean'
     ];
 
     /**
@@ -65,20 +67,17 @@ class Property extends Model
     // Scopes...
 
     // Functions ...
-    public function getReadableNameAttribute()
-    {
-        return $this->area->name.' '.$this->address.' '.$this->name;
-    }
+    public static $type = ["租售","出售"];
 
     // Relations ...
 
-    public function houses()
+    public function house()
     {
-        return $this->hasMany('App\Models\House');
+        return $this->belongsTo('App\Models\House');
     }
 
-    public function area()
+    public function consumer()
     {
-        return $this->belongsTo('App\Models\Area');
+        return $this->belongsTo('App\Models\Consumer');
     }
 }

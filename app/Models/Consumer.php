@@ -6,20 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
 
 /**
- * @property string     $address
+ * @property string     $first_name
+ * @property string     $last_name
+ * @property boolean    $gender
+ * @property string     $email
+ * @property string     $tel
+ * @property string     $note
  * @property int        $created_at
- * @property string     $name
  * @property int        $updated_at
+ * @property int        $deleted_at
  */
-class Property extends Model
+class Consumer extends Model
 {
     use DefaultDatetimeFormat;
+
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'properties';
+    protected $table = 'consumers';
 
     /**
      * The primary key for the model.
@@ -34,7 +40,7 @@ class Property extends Model
      * @var array
      */
     protected $fillable = [
-        'address', 'area_id', 'lat', 'lng', 'name'
+        'first_name', 'last_name', 'gender', 'email', 'tel', 'note'
     ];
 
     /**
@@ -52,7 +58,7 @@ class Property extends Model
      * @var array
      */
     protected $casts = [
-        'address' => 'string', 'name' => 'string'
+        'first_name' => 'string', 'last_name' => 'string', 'gender' => 'boolean', 'email' => 'string', 'tel' => 'string', 'note' => 'string'
     ];
 
     /**
@@ -65,20 +71,17 @@ class Property extends Model
     // Scopes...
 
     // Functions ...
-    public function getReadableNameAttribute()
+    public static $gender = ["男","女"];
+
+    public function getFullNameAttribute()
     {
-        return $this->area->name.' '.$this->address.' '.$this->name;
+        return $this->last_name.$this->first_name;
     }
 
     // Relations ...
 
-    public function houses()
+    public function purchases()
     {
-        return $this->hasMany('App\Models\House');
-    }
-
-    public function area()
-    {
-        return $this->belongsTo('App\Models\Area');
+        return $this->hasMany('App\Models\Purchase');
     }
 }
