@@ -26,7 +26,7 @@ class CreateHousesTable extends Migration
             $table->integer('balconines')->comment('几阳台');
             $table->bigInteger('sell_price')->comment('售价（人民币分）')->nullable();
             $table->bigInteger('rent_price')->comment('租金（人民币分）')->nullable();
-            $table->boolean('status')->comment('状态');
+            $table->boolean('status')->comment('状态')->nullable();
             $table->text('note')->comment('备注')->nullable();
             $table->timestamps();
         });
